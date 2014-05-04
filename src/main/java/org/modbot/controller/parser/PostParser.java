@@ -45,6 +45,6 @@ public final class PostParser {
 
 		ForumMember user = new ForumMember(posterId, posterUsername);
 		Date date = new Date(postTime * 1000);
-        return new ThreadPost(postId, postTitle, user, date, content);
+		return new ThreadPost(postId, postTitle, user, date, content);
 	}
 }

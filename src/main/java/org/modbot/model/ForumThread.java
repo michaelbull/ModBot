@@ -75,7 +75,6 @@ public final class ForumThread {
 		}
 
 		ForumThread forumThread = (ForumThread) o;
-
 		return id == forumThread.id;
 	}
 

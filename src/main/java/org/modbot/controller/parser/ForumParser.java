@@ -47,7 +47,7 @@ public final class ForumParser {
 				forumThreads.add(forumThread);
 			}
 		}
-        return new Forum(forumId, forumTitle, forumThreads, deletedForumThreads);
+		return new Forum(forumId, forumTitle, forumThreads, deletedForumThreads);
 	}
 
 }

@@ -13,9 +13,7 @@ public final class ThreadPost {
 	private final int id;
 	private final String title;
 	private final ForumMember author;
-
 	private final Date date;
-
 	private final String content;
 
 	public ThreadPost(int id, String title, ForumMember author, Date date, String content) {
@@ -44,6 +42,20 @@ public final class ThreadPost {
 
 	public String getContent() {
 		return content;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ThreadPost threadPost = (ThreadPost) o;
+		return id == threadPost.id;
+	}
+
+	@Override
+	public int hashCode() {
+		return id;
 	}
 
 	@Override

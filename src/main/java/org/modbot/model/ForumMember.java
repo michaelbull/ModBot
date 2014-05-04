@@ -20,6 +20,20 @@ public final class ForumMember {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ForumMember forumMember = (ForumMember) o;
+		return id == forumMember.id;
+	}
+
+	@Override
+	public int hashCode() {
+		return id;
+	}
+
+	@Override
 	public String toString() {
 		return Objects.toStringHelper(this)
 				.add("id", id)

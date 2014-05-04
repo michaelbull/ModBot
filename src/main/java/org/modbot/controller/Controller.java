@@ -45,7 +45,6 @@ public final class Controller implements ViewListener {
 	}
 
 	public void init() throws IOException, NoSuchAlgorithmException {
-		/* initialise mobile api */
 		Query apiInit = new Query.Builder("api_init", apiVersion, apiClientId, apiAccessToken, secret, apiKey)
 				.parameter("clientname", CLIENT_NAME)
 				.parameter("platformname", CLIENT_NAME)

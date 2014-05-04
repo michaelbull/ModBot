@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 
 /**
- * TODO
+ * A codec for encoding/decoding {@link Credentials}.
  * @author Michael Bull
  */
 public final class CredentialsCodec {
