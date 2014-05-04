@@ -1,7 +1,8 @@
 ModBot
 ========
 
-Automated moderation for VBulletin based forums using the [VBulletin Mobile API][1].
+Automated moderation for VBulletin based forums using the
+[VBulletin Mobile API][1].
 
 Developed using the [Model–view–controller][2] pattern.
 
