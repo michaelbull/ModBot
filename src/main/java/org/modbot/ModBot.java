@@ -47,14 +47,18 @@ public final class ModBot {
 		view.addListener(this.controller);
 	}
 
-	public void start() throws IOException, NoSuchAlgorithmException {
+	public void start() {
 		logger.info("Started ModBot successfully.");
-		controller.init();
+		try {
+			controller.init();
+		} catch (IOException | NoSuchAlgorithmException e) {
+			logger.warn("Failed to initialise controller:", e);
+		}
 
 		try {
 			Credentials loadedCredentials = CredentialsCodec.read();
 			model.setLoadedCredentials(loadedCredentials);
-		} catch (GeneralSecurityException e) {
+		} catch (IOException | GeneralSecurityException e) {
 			logger.warn("Failed to load existing saved credentials:", e);
 		}
 	}
