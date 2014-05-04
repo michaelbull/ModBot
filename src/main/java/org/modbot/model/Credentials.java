@@ -7,7 +7,6 @@ import com.google.common.base.Objects;
  * @author Michael Bull
  */
 public final class Credentials {
-
 	private final String username;
 	private final String password;
 
