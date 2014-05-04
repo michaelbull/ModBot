@@ -1,1 +1,1 @@
-ModBot
+Automated moderation for VBulletin based forums using the VBulletin Mobile Api
