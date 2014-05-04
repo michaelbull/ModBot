@@ -70,8 +70,6 @@ public final class Model {
 			listener.notifyCredentialsLoaded(credentials);
 	}
 
-
-
 	public void setRememberMe(boolean rememberMe) {
 		this.rememberMe = rememberMe;
 		for (ModelListener listener : listeners)

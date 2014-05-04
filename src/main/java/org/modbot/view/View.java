@@ -21,19 +21,11 @@ public abstract class View implements ModelListener {
 		this.url = url;
 	}
 
-	public String getURL() {
-		return url;
-	}
-
 	public abstract void displayError(Throwable t);
 
 	public abstract void displayError(String message, String title);
 
 	public abstract void displayInformationDialog(String message, String title, Icon icon);
-
-	public void addListener(ViewListener listener) {
-		listeners.add(listener);
-	}
 
 	public void usernameFieldChanged(String username) {
 		for (ViewListener listener : listeners)
@@ -73,5 +65,13 @@ public abstract class View implements ModelListener {
 	public void openMissedReportButtonPressed(ForumThread missedReport) {
 		for (ViewListener listener : listeners)
 			listener.notifyOpenMissedReport(missedReport);
+	}
+
+	public void addListener(ViewListener listener) {
+		listeners.add(listener);
+	}
+
+	public String getURL() {
+		return url;
 	}
 }
