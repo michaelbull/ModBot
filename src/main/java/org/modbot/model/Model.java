@@ -13,7 +13,7 @@ public final class Model {
 	private final List<ModelListener> listeners = new ArrayList<>();
 	private final List<ForumThread> cachedReports = new ArrayList<>();
 	private final List<ForumThread> missedReports = new ArrayList<>();
-	private Credentials credentials;
+	private Credentials credentials = new Credentials("", "");
 	private boolean rememberMe = false;
 	private ReportSearchTask reportSearchTask;
 	private ForumThread openReport;

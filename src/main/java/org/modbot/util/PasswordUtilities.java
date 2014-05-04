@@ -14,7 +14,7 @@ import java.security.GeneralSecurityException;
 
 /**
  * Provides various password related utilities used for securely storing user credentials on a user's file system.
- * @author Michael Bull
+ * @author Cube
  */
 public final class PasswordUtilities {
 	private static final char[] PASSWORD = "sd2k3soe21rwo3ursasf".toCharArray();
