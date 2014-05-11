@@ -4,8 +4,8 @@ import org.modbot.controller.Controller;
 import org.modbot.model.Credentials;
 import org.modbot.model.Model;
 import org.modbot.model.io.CredentialsCodec;
-import org.modbot.view.swing.SwingView;
 import org.modbot.view.View;
+import org.modbot.view.swing.SwingView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

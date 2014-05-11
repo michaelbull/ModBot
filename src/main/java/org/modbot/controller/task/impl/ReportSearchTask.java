@@ -5,10 +5,10 @@ import ch.swingfx.twinkle.event.NotificationEventAdapter;
 import org.modbot.controller.Controller;
 import org.modbot.controller.notification.Notifier;
 import org.modbot.controller.parser.ForumParser;
-import org.modbot.util.OpenThreadException;
 import org.modbot.controller.task.Task;
 import org.modbot.model.Forum;
 import org.modbot.model.ForumThread;
+import org.modbot.util.OpenThreadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

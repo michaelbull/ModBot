@@ -2,8 +2,8 @@ package org.modbot.model;
 
 import com.google.common.base.Objects;
 import org.modbot.controller.Controller;
-import org.modbot.util.OpenThreadException;
 import org.modbot.controller.parser.ThreadParser;
+import org.modbot.util.OpenThreadException;
 
 import java.io.IOException;
 import java.util.List;
