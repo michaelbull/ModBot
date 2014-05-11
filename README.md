@@ -41,6 +41,14 @@ The following Java libraries are used by the application:
 * [SLF4J][slf4j]
 * [Twinkle][twinkle]
 
+Credits
+-------
+
+### Contributors
+
+* [Michael Bull][mikebull94]
+* [Cube][cube]
+
 Screenshots
 ------------
 
@@ -61,3 +69,5 @@ Screenshots
 [guava]: https://code.google.com/p/guava-libraries/
 [slf4j]: http://www.slf4j.org/
 [twinkle]: http://www.swingfx.ch/
+[mikebull94]: https://github.com/MikeBull94
+[cube]: https://github.com/cubeee
