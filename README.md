@@ -54,6 +54,8 @@ Credits
 * [Heinrich Spreiter][spreiter301] - author of the Twinkle library used for
 displaying notifications.
 * [Hai Trieu][haitrieu] - sample code for the VBulletin Mobile API.
+* [Adam Parsons][aparsons] - personal maven repository that includes artifacts
+such as the Twinkle library.
 * All of the contributors behind [Google Gson][gsoncontributors] &
 [Google Guava][guavacontributors].
 
@@ -81,5 +83,6 @@ Screenshots
 [cube]: https://github.com/cubeee
 [spreiter301]: https://github.com/spreiter301
 [haitrieu]: http://ios4vn.com/?p=55
+[aparsons]: https://github.com/aparsons
 [gsoncontributors]: https://code.google.com/p/google-gson/people/list
 [guavacontributors]: https://code.google.com/p/guava-libraries/people/list
