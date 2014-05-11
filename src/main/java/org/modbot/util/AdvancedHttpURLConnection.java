@@ -25,17 +25,15 @@ public final class AdvancedHttpURLConnection {
 	public String get(String file) throws IOException {
 		StringBuilder contents = new StringBuilder();
 		HttpURLConnection connection = (HttpURLConnection) new URL(url + file).openConnection();
+		connection.setRequestMethod("GET");
 		connection.setRequestProperty("User-Agent", HttpUtilities.getHttpUserAgent());
 		connection.setInstanceFollowRedirects(false);
 		connection.setUseCaches(false);
 		connection.connect();
 
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-			while (true) {
-				String line = reader.readLine();
-				if (line == null) {
-					break;
-				}
+			String line;
+			while ((line = reader.readLine()) != null) {
 				contents.append(line).append("\n");
 			}
 		}
@@ -43,6 +41,7 @@ public final class AdvancedHttpURLConnection {
 	}
 
 	public String post(String file, Map<String, Object> values) throws IOException {
+		StringBuilder contents = new StringBuilder();
 		HttpURLConnection connection = (HttpURLConnection) new URL(url + file).openConnection();
 		connection.setDoOutput(true);
 		connection.setRequestMethod("POST");
@@ -55,14 +54,11 @@ public final class AdvancedHttpURLConnection {
 		writer.write(HttpUtilities.implode(values));
 		writer.flush();
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		StringBuilder contents = new StringBuilder();
-		while (true) {
-			String line = reader.readLine();
-			if (line == null) {
-				break;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				contents.append(line).append("\n");
 			}
-			contents.append(line).append("\n");
 		}
 		return contents.toString();
 	}

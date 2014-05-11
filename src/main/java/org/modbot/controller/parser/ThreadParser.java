@@ -1,8 +1,8 @@
 package org.modbot.controller.parser;
 
-import json.JsonArray;
-import json.JsonObject;
-import json.JsonValue;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.modbot.model.Forum;
 import org.modbot.model.ForumThread;
 import org.modbot.model.ThreadPost;
@@ -16,25 +16,29 @@ import java.util.List;
  * @author Michael Bull
  */
 public final class ThreadParser {
-	public static List<ThreadPost> parse(JsonObject threadObject) throws IOException {
-		List<ThreadPost> threadThreadPosts = new ArrayList<>();
-
-		JsonObject response = threadObject.get("response").asObject();
-		int totalPosts = response.get("totalposts").asInt();
+	public static List<ThreadPost> parse(JsonObject jsonObject) throws IOException {
+		List<ThreadPost> threadPosts = new ArrayList<>();
+		JsonObject response = jsonObject.getAsJsonObject("response");
+		int totalPosts = response.get("totalposts").getAsInt();
 
 		if (totalPosts > 1) {
-			JsonArray postBits = response.get("postbits").asArray();
-			for (JsonValue postBit : postBits) {
-				JsonObject post = postBit.asObject().get("post").asObject();
+			JsonArray postBits = response.getAsJsonArray("postbits");
+			for (JsonElement element : postBits) {
+				JsonObject postBit = element.getAsJsonObject();
+
+				JsonObject post = postBit.getAsJsonObject("post");
 				ThreadPost threadPost = PostParser.parse(post);
-				threadThreadPosts.add(threadPost);
+				threadPosts.add(threadPost);
 			}
 		} else {
-			JsonObject postBits = response.get("postbits").asObject();
-			JsonObject post = postBits.get("post").asObject();
+			JsonObject postBits = response.getAsJsonObject("postbits");
+			JsonObject post = postBits.getAsJsonObject("post");
 			ThreadPost threadPost = PostParser.parse(post);
-			threadThreadPosts.add(threadPost);
+			threadPosts.add(threadPost);
 		}
-		return threadThreadPosts;
+		return threadPosts;
+	}
+
+	private ThreadParser() {
 	}
 }

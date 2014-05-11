@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.GridBagConstraints;
@@ -74,32 +73,30 @@ public final class ReportScreen extends Screen {
 		postContentPane.setContentType("text/html");
 		postContentPane.setEditable(false);
 		postContentPane.setOpaque(false);
-		postContentPane.addHyperlinkListener(new HyperlinkListener() {
-			@Override
-			public void hyperlinkUpdate(HyperlinkEvent event) {
-				if (!event.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
-					return;
-				}
+		postContentPane.addHyperlinkListener(event -> {
+			if (!event.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
+				return;
+			}
 
-				String description = event.getDescription();
-				if (description.startsWith("vb:member") && description.contains("u=")) {
-					int memberId = Integer.parseInt(description.substring(description.indexOf("u=") + 2));
-					DesktopUtilities.viewUserProfile(view.getURL(), memberId);
-				} else if (description.startsWith("vb:showthread") && description.contains("t=")) {
-					String threadText = description.substring(description.indexOf("t="));
-					int threadId = Integer.parseInt(threadText.substring(2, threadText.indexOf("/")));
+			String description = event.getDescription();
+			if (description.startsWith("vb:member") && description.contains("u=")) {
+				int memberId = Integer.parseInt(description.substring(description.indexOf("u=") + 2));
+				DesktopUtilities.viewUserProfile(view.getURL(), memberId);
+			} else if (description.startsWith("vb:showthread") && description.contains("t=")) {
+				String threadText = description.substring(description.indexOf("t="));
+				int threadId = Integer.parseInt(threadText.substring(2, threadText.indexOf("/")));
 //						String postText = description.substring(description.indexOf("p="));
-					int postId = Integer.parseInt(description.substring(description.indexOf("p=") + 2));
-					DesktopUtilities.viewPost(view.getURL(), threadId, postId);
-				} else if (description.startsWith("vb:editpost") && description.contains("p=")) {
-					String threadText = description.substring(description.indexOf("p="));
-					int threadId = Integer.parseInt(threadText.substring(2));
-					DesktopUtilities.viewThread(view.getURL(), threadId);
-				} else if (description.startsWith("mailto:")) {
-					DesktopUtilities.mailTo(description);
-				} else {
-					logger.warn("Unhandled URL description: " + description + ".");
-				}
+				int postId = Integer.parseInt(description.substring(description.indexOf("p=") + 2));
+				DesktopUtilities.viewPost(view.getURL(), threadId, postId);
+			} else if (description.startsWith("vb:editpost") && description.contains("p=")) {
+				String threadText = description.substring(description.indexOf("p="));
+				int threadId = Integer.parseInt(threadText.substring(2));
+				DesktopUtilities.viewThread(view.getURL(), threadId);
+			} else if (description.startsWith("mailto:")) {
+				DesktopUtilities.mailTo(description);
+			} else {
+				DesktopUtilities.browse(view.getURL() + "/" + description);
+//					logger.warn("Unhandled URL description: " + description + ".");
 			}
 		});
 

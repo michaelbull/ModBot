@@ -34,7 +34,7 @@ public final class DesktopUtilities {
 		}
 	}
 
-	private static void browse(String url) {
+	public static void browse(String url) {
 		try {
 			Desktop.getDesktop().browse(URI.create(url));
 		} catch (IOException e) {

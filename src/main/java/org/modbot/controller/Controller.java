@@ -1,14 +1,16 @@
 package org.modbot.controller;
 
 import com.google.common.base.Objects;
-import json.JsonObject;
-import org.modbot.util.OpenThreadException;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.modbot.controller.task.TaskScheduler;
 import org.modbot.controller.task.impl.ReportSearchTask;
 import org.modbot.model.Credentials;
+import org.modbot.model.ForumMember;
 import org.modbot.model.ForumThread;
 import org.modbot.model.Model;
 import org.modbot.util.AdvancedHttpURLConnection;
+import org.modbot.util.OpenThreadException;
 import org.modbot.view.swing.ViewListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +46,15 @@ public final class Controller implements ViewListener {
 		this.apiKey = apiKey;
 	}
 
-	public void init() throws IOException, NoSuchAlgorithmException {
+	/**
+	 * api_init is the first method of the API that a client should call.
+	 * Client should send its name and version.
+	 * The method will return information of the API such as API version.
+	 * Also it will return the session hash to the client.
+	 * @throws IOException If an IOException occurs
+	 * @throws NoSuchAlgorithmException If a NoSuchAlgorithmException
+	 */
+	public void apiInit() throws IOException, NoSuchAlgorithmException {
 		Query apiInit = new Query.Builder("api_init", apiVersion, apiClientId, apiAccessToken, secret, apiKey)
 				.parameter("clientname", CLIENT_NAME)
 				.parameter("platformname", CLIENT_NAME)
@@ -54,13 +64,13 @@ public final class Controller implements ViewListener {
 				.build();
 
 		JsonObject response = apiInit.run(connection);
-		apiVersion = response.get("apiversion").asInt();
-		apiClientId = response.get("apiclientid").asString();
-		apiAccessToken = response.get("apiaccesstoken").asString();
-		secret = response.get("secret").asString();
-		logger.info("Initialised " + this + ".");
+		apiVersion = response.get("apiversion").getAsInt();
+		apiClientId = response.get("apiclientid").getAsString();
+		apiAccessToken = response.get("apiaccesstoken").getAsString();
+		secret = response.get("secret").getAsString();
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean login() {
 		Credentials credentials = model.getCredentials();
 		Query login = new Query.Builder("login_login", apiVersion, apiClientId, apiAccessToken, secret, apiKey)
@@ -70,20 +80,49 @@ public final class Controller implements ViewListener {
 				.parameter("debug", "1")
 				.build();
 
-		JsonObject response;
+		JsonObject jsonObject;
 		try {
-			response = login.run(connection);
+			jsonObject = login.run(connection);
 		} catch (IOException e) {
-			logger.warn("Failed to login: ", e);
+			logger.warn("Failed to login:", e);
 			return false;
 		}
 
 		try {
-			JsonObject session = response.get("session").asObject();
-			int uid = session.get("userid").asInt();
-			return uid != 0;
+			// $return['response']['errormessage'] is an array.
+			// Its first item is always an error ID (underlying it's actually the error message phrase name).
+			// Other items are params coupled with the error.
+			JsonObject response = jsonObject.getAsJsonObject("response");
+			JsonArray errorMessage = response.get("errormessage").getAsJsonArray();
+			String errorId = errorMessage.get(0).getAsString();
+
+			switch (errorId) {
+				case "redirect_login":
+					String username = errorMessage.get(1).getAsString();
+					JsonObject session = jsonObject.getAsJsonObject("session");
+					double userId = session.get("userid").getAsInt();
+					ForumMember member = new ForumMember((int) userId, username);
+					logger.info("Successfully logged into " + member + ".");
+					return true;
+				case "badlogin":  // called if ($vbulletin->GPC['vb_login_username'] == '')
+					logger.warn("Failed to login as the provided user credentials were invalid.");
+					return false;
+				case "strikes":  // called if ($strikes['strikes'] >= 5 AND $strikes['lasttime'] > TIMENOW - 900)
+					logger.warn("Failed to login as we have entered invalid credentials more than 5 times in 15 minutes.");
+					return false;
+				case "badlogin_strikes_passthru":  // called if $vbulletin->options['usestrikesystem'] is true
+					int loginFailedTimes = errorMessage.get(3).getAsInt();
+					logger.warn("Failed to login due to invalid user credentials. We have attempted to login " + loginFailedTimes + " times recently.");
+					return false;
+				case "badlogin_passthru":
+					logger.warn("Failed to login due to invalid user credentials.");
+					return false;
+				default:
+					logger.warn("Failed to login.");
+					return false;
+			}
 		} catch (NullPointerException | UnsupportedOperationException e) {
-			logger.warn("Failed to login: ", e);
+			logger.warn("Failed to login:", e);
 			return false;
 		}
 	}
@@ -167,8 +206,9 @@ public final class Controller implements ViewListener {
 	@Override
 	public void notifyDeleteReport() {
 		try {
-			JsonObject deleteObject = deleteThread(model.getOpenReport().getId());
-			String errorMessage = deleteObject.get("response").asObject().get("errormessage").asString();
+			JsonObject jsonObject = deleteThread(model.getOpenReport().getId());
+			JsonObject response = jsonObject.getAsJsonObject("response");
+			String errorMessage = response.get("errormessage").getAsString();
 			model.setDeletedThreadResponseMessage(errorMessage);
 		} catch (IOException e) {
 			logger.warn("Failed to delete report:", e);

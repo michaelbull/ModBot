@@ -1,10 +1,6 @@
 package org.modbot.controller.parser;
 
-import json.JsonObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.google.gson.JsonObject;
 import org.modbot.model.ForumMember;
 import org.modbot.model.ForumThread;
 import org.modbot.model.ThreadPost;
@@ -16,35 +12,29 @@ import java.util.Date;
  * @author Michael Bull
  */
 public final class PostParser {
-	public static ThreadPost parse(JsonObject postObject) {
-		int postId = Integer.parseInt(postObject.get("postid").asString());
-		long postTime = Long.parseLong(postObject.get("posttime").asString());
-		int posterId = Integer.parseInt(postObject.get("userid").asString());
-		String posterUsername = postObject.get("username").asString();
-		String postTitle = postObject.get("title").asString();
+	public static ThreadPost parse(JsonObject post) {
+		int postId = post.get("postid").getAsInt();
+		long postTime = post.get("posttime").getAsLong();
+		int userId = post.get("userid").getAsInt();
+		String username = post.get("username").getAsString();
+		String postTitle = post.get("title").getAsString();
 		postTitle = postTitle.replace("<!-- google_ad_section_start -->", "").replace("<!-- google_ad_section_end -->", "");
 
 		String content;
-//		if (postObject.get("message_bbcode") != null) {
-//			content = postObject.get("message_bbcode").asString();
+//		JsonElement message_bbcode = post.get("message_bbcode");
+//		if (message_bbcode != null) {
+//			content = message_bbcode.getAsString();
 //		} else {
-//			content = postObject.get("message_plain").asString();
+//			content = post.get("message_plain").getAsString();
 //		}
-		content = postObject.get("message").asString();
+		content = post.get("message").getAsString();
 		content = content.replace("<!-- google_ad_section_start -->", "").replace("<!-- google_ad_section_end -->", "");
 
-		Document doc = Jsoup.parse(content);
-		Elements images = doc.getElementsByTag("img");
-		for (Element image : images) {
-			String url = image.attr("src");
-			if (!url.startsWith("http") && !url.startsWith("www")) {
-				image.remove();
-			}
-		}
-		content = doc.html();
-
-		ForumMember user = new ForumMember(posterId, posterUsername);
+		ForumMember user = new ForumMember(userId, username);
 		Date date = new Date(postTime * 1000);
 		return new ThreadPost(postId, postTitle, user, date, content);
+	}
+
+	private PostParser() {
 	}
 }

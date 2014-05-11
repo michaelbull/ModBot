@@ -8,9 +8,8 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
+    compile group: 'com.google.guava', name: 'guava', version: '17.0'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.7'
     compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.7'
-    compile group: 'io.netty', name: 'netty-all', version: '4.0.18.Final'
-    compile group: 'com.google.guava', name: 'guava', version: '17.0'
-    compile group: 'org.jsoup', name: 'jsoup', version: '1.7.3'
 }

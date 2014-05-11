@@ -50,7 +50,7 @@ public final class ModBot {
 	public void start() {
 		logger.info("Started ModBot successfully.");
 		try {
-			controller.init();
+			controller.apiInit();
 		} catch (IOException | NoSuchAlgorithmException e) {
 			logger.warn("Failed to initialise controller:", e);
 		}
