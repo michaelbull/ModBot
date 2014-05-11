@@ -5,11 +5,11 @@ Introduction
 ------------
 
 Automated moderation for VBulletin based forums using the
-[VBulletin Mobile API][api]. This application makes use of the mobile API
-included in VBulletin forums running version 4.1 and later. The mobile API must
+[VBulletin Mobile API][api]. This application makes use of the Mobile API
+included in VBulletin forums running version 4.1 and later. The Mobile API must
 be enabled by the administrator and an API key must be generated.
 
-The full list of available methods that the mobile API may utilise can be found
+The full list of available methods that the Mobile API may utilise can be found
 [here][methodlist].
 
 The application has been developed using the [Model–view–controller][mvc]
@@ -49,6 +49,14 @@ Credits
 * [Michael Bull][mikebull94]
 * [Cube][cube]
 
+### Miscellaneous Credits
+
+* [Heinrich Spreiter][spreiter301] - author of the Twinkle library used for
+displaying notifications.
+* [Hai Trieu][haitrieu] - sample code for the VBulletin Mobile API.
+* All of the contributors behind [Google Gson][gsoncontributors] &
+[Google Guava][guavacontributors].
+
 Screenshots
 ------------
 
@@ -71,3 +79,7 @@ Screenshots
 [twinkle]: http://www.swingfx.ch/
 [mikebull94]: https://github.com/MikeBull94
 [cube]: https://github.com/cubeee
+[spreiter301]: https://github.com/spreiter301
+[haitrieu]: http://ios4vn.com/?p=55
+[gsoncontributors]: https://code.google.com/p/google-gson/people/list
+[guavacontributors]: https://code.google.com/p/guava-libraries/people/list
