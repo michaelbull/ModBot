@@ -39,6 +39,7 @@ The following Java libraries are used by the application:
 * [Google Gson][gson]
 * [Google Guava][guava]
 * [SLF4J][slf4j]
+* [Twinkle][twinkle]
 
 Screenshots
 ------------
@@ -59,3 +60,4 @@ Screenshots
 [gson]: https://code.google.com/p/google-gson/
 [guava]: https://code.google.com/p/guava-libraries/
 [slf4j]: http://www.slf4j.org/
+[twinkle]: http://www.swingfx.ch/
