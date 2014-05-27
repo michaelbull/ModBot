@@ -1,6 +1,7 @@
 package org.modbot.view.swing;
 
 import org.modbot.ModBot;
+import org.modbot.controller.task.impl.NewMembersSearchTask;
 import org.modbot.controller.task.impl.ReportSearchTask;
 import org.modbot.model.Credentials;
 import org.modbot.model.ForumThread;
@@ -147,6 +148,15 @@ public final class SwingView extends View {
 //			displayInformationDialog("Started searching for reports.", "Report Search", null);
 //		}
 		mainScreen.setReportsSearchButtonText(started ? "Stop report search" : "Start report search");
+	}
+
+	@Override
+	public void notifyNewMembersSearchTask(NewMembersSearchTask task) {
+		boolean started = (task != null);
+//		if (started) {
+//			displayInformationDialog("Started searching for new members.", "New Members Search", null);
+//		}
+		mainScreen.setNewMembersSearchButtonText(started ? "Stop new members search" : "Start new members search");
 	}
 
 	@Override
