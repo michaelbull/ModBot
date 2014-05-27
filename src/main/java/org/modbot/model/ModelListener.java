@@ -1,5 +1,6 @@
 package org.modbot.model;
 
+import org.modbot.controller.task.impl.NewMembersSearchTask;
 import org.modbot.controller.task.impl.ReportSearchTask;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public interface ModelListener {
 	public void notifyRememberMeUpdated(boolean rememberMe);
 	public void notifyLoggedIn(Credentials credentials, boolean loggedIn, boolean rememberMe);
 	public void notifyReportSearchTask(ReportSearchTask task);
+	public void notifyNewMembersSearchTask(NewMembersSearchTask task);
 	public void notifyOpenedReport(ForumThread report);
 	public void notifyDeletedThreadResponseMessage(String deletedThreadResponseMessage);
 }

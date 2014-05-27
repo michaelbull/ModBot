@@ -23,6 +23,7 @@ public final class MainScreen extends Screen {
 	private final JPanel reportsPanel = new JPanel(new GridBagLayout());
 	private final GridBagConstraints reportsPanelConstraints = new GridBagConstraints();
 	private final JButton reportsSearchButton = new JButton("Start report search");
+	private final JButton newMembersSearchButton = new JButton("Start new members search");
 
 	public MainScreen(SwingView view) {
 		super(view);
@@ -32,6 +33,10 @@ public final class MainScreen extends Screen {
 		c.gridy++;
 		reportsSearchButton.addActionListener(e -> view.reportSearchButtonPressed());
 		contentPane.add(reportsSearchButton, c);
+
+		c.gridy++;
+		newMembersSearchButton.addActionListener(e -> view.newMembersSearchButtonPressed());
+		contentPane.add(newMembersSearchButton, c);
 
 		c.gridy++;
 		JButton clearCacheButton = new JButton("Clear reports cache");
@@ -61,6 +66,10 @@ public final class MainScreen extends Screen {
 
 	public void setReportsSearchButtonText(String text) {
 		reportsSearchButton.setText(text);
+	}
+
+	public void setNewMembersSearchButtonText(String text) {
+		newMembersSearchButton.setText(text);
 	}
 
 	@Override

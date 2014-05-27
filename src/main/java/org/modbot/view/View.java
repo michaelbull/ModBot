@@ -52,6 +52,11 @@ public abstract class View implements ModelListener {
 			listener.notifyReportSearch();
 	}
 
+	public void newMembersSearchButtonPressed() {
+		for (ViewListener listener : listeners)
+			listener.notifyNewMembersSearch();
+	}
+
 	public void clearCacheButtonPressed() {
 		for (ViewListener listener : listeners)
 			listener.notifyClearCachedReports();

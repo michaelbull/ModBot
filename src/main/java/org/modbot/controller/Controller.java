@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.modbot.controller.task.TaskScheduler;
+import org.modbot.controller.task.impl.NewMembersSearchTask;
 import org.modbot.controller.task.impl.ReportSearchTask;
 import org.modbot.model.Credentials;
 import org.modbot.model.ForumMember;
@@ -32,6 +33,7 @@ public final class Controller implements ViewListener {
 
 	private final TaskScheduler taskScheduler = new TaskScheduler();
 	private final Model model;
+	private final String url;
 	private final AdvancedHttpURLConnection connection;
 	private final String apiKey;
 
@@ -42,6 +44,7 @@ public final class Controller implements ViewListener {
 
 	public Controller(Model model, String url, String apiKey) {
 		this.model = model;
+		this.url = url;
 		this.connection = new AdvancedHttpURLConnection(url);
 		this.apiKey = apiKey;
 	}
@@ -73,6 +76,20 @@ public final class Controller implements ViewListener {
 	@SuppressWarnings("unchecked")
 	public boolean login() {
 		Credentials credentials = model.getCredentials();
+
+		// login via http also for GET requests
+		try {
+			boolean successful = connection.login(credentials);
+			if (!successful) {
+				logger.warn("Failed to login via HTTP.");
+			} else {
+				logger.info("Successfully logged in via HTTP to " + credentials.getUsername() + ".");
+			}
+		} catch (IOException e) {
+			logger.warn("Failed to login via HTTP:", e);
+		}
+
+
 		Query login = new Query.Builder("login_login", apiVersion, apiClientId, apiAccessToken, secret, apiKey)
 				.parameter("vb_login_username", credentials.getUsername())
 				.parameter("vb_login_password", credentials.getPassword())
@@ -150,8 +167,23 @@ public final class Controller implements ViewListener {
 		return query.run(connection);
 	}
 
+	public JsonObject member(String username) throws IOException {
+		Query query = new Query.Builder("member", apiVersion, apiClientId, apiAccessToken, secret, apiKey)
+				.parameter("username", username)
+				.build();
+		return query.run(connection);
+	}
+
 	public Model getModel() {
 		return model;
+	}
+
+	public AdvancedHttpURLConnection getConnection() {
+		return connection;
+	}
+
+	public String getUrl() {
+		return url;
 	}
 
 	@Override
@@ -194,6 +226,19 @@ public final class Controller implements ViewListener {
 		} else {
 			ReportSearchTask task = new ReportSearchTask(this);
 			model.setReportSearchTask(task);
+			taskScheduler.start(task, true);
+		}
+	}
+
+	@Override
+	public void notifyNewMembersSearch() {
+		NewMembersSearchTask existingTask = model.getNewMembersSearchTask();
+		if (existingTask != null) {
+			existingTask.stop();
+			model.setNewMembersSearchTask(null);
+		} else {
+			NewMembersSearchTask task = new NewMembersSearchTask(this);
+			model.setNewMembersSearchTask(task);
 			taskScheduler.start(task, true);
 		}
 	}

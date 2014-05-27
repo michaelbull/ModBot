@@ -13,6 +13,7 @@ public interface ViewListener {
 	public void notifyLoginAttempt();
 	public void notifyRememberMeSelected(boolean selected);
 	public void notifyReportSearch();
+	public void notifyNewMembersSearch();
 	public void notifyClearCachedReports();
 	public void notifyDeleteReport();
 	public void notifyOpenMissedReport(ForumThread report);

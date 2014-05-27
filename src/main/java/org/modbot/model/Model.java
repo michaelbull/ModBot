@@ -1,5 +1,6 @@
 package org.modbot.model;
 
+import org.modbot.controller.task.impl.NewMembersSearchTask;
 import org.modbot.controller.task.impl.ReportSearchTask;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public final class Model {
 	private Credentials credentials = new Credentials("", "");
 	private boolean rememberMe = false;
 	private ReportSearchTask reportSearchTask;
+	private NewMembersSearchTask newMembersSearchTask;
 	private ForumThread openReport;
 
 	public void addListener(ModelListener listener) {
@@ -89,6 +91,16 @@ public final class Model {
 		this.reportSearchTask = reportSearchTask;
 		for (ModelListener listener : listeners)
 			listener.notifyReportSearchTask(reportSearchTask);
+	}
+
+	public NewMembersSearchTask getNewMembersSearchTask() {
+		return newMembersSearchTask;
+	}
+
+	public void setNewMembersSearchTask(NewMembersSearchTask newMembersSearchTask) {
+		this.newMembersSearchTask = newMembersSearchTask;
+		for (ModelListener listener : listeners)
+			listener.notifyNewMembersSearchTask(newMembersSearchTask);
 	}
 
 	public ForumThread getOpenReport() {
