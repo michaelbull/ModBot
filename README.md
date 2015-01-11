@@ -63,10 +63,10 @@ Screenshots
 ------------
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/MikeBull94/modbot/master/img/screenshot1.png">
+  <img src="https://raw.githubusercontent.com/MikeBull94/modbot/master/img/screenshot1.png" alt="Login">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/MikeBull94/modbot/master/img/screenshot2.png">
+  <img src="https://raw.githubusercontent.com/MikeBull94/modbot/master/img/screenshot2.png" alt="Notification">
 </p>
 
 [api]: http://www.vbulletin.com/vbcms/content.php/334-mobile-api
