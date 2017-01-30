@@ -34,7 +34,7 @@ The following Java libraries are used by the application:
 
 ### Contributors
 
-* [Michael Bull][mikebull94]
+* [Michael Bull][michaelbull]
 * [Cube][cube]
 
 ### Miscellaneous Credits
@@ -61,7 +61,7 @@ The following Java libraries are used by the application:
 [guava]: https://code.google.com/p/guava-libraries/
 [slf4j]: http://www.slf4j.org/
 [twinkle]: http://www.swingfx.ch/
-[mikebull94]: https://github.com/MikeBull94
+[michaelbull]: https://github.com/michaelbull
 [cube]: https://github.com/cubeee
 [spreiter301]: https://github.com/spreiter301
 [haitrieu]: http://ios4vn.com/?p=55
